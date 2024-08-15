@@ -1,5 +1,5 @@
 import os
-
+import streamlit as st
 from dotenv import load_dotenv
 from llama_index.chat_engine.condense_plus_context import CondensePlusContextChatEngine
 from llama_index.llms.openai import OpenAI
@@ -11,7 +11,7 @@ from traceloop.sdk import Traceloop
 from pathway.xpacks.llm.vector_store import VectorStoreClient
 
 load_dotenv()
-
+OPENAI_API_KEY = st.secrets['OPENAI_API_KEY']
 
 Traceloop.init(app_name=os.environ.get("APP_NAME", "PW - LlamaIndex (Streamlit)"))
 
@@ -42,7 +42,7 @@ retriever.client = VectorStoreClient(
     host=PATHWAY_HOST, port=PATHWAY_PORT, additional_headers=get_additional_headers()
 )
 
-llm = OpenAI(model="gpt-3.5-turbo")
+llm = OpenAI(model="gpt-4o")
 
 query_engine = RetrieverQueryEngine.from_args(
     retriever,
